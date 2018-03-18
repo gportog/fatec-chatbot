@@ -1,0 +1,16 @@
+img.component-image {
+    max-width: 100%;
+    height: 150px
+}
+
+.anonymous-image {
+    max-width: 100%;
+    height: 150px;
+    background: url('../../public/img/icons/anonymous_user.png') no-repeat center;    
+}
+
+.loading {
+    max-width: 100%;
+    height: 60px;
+    background: url('../../public/img/loaders/loading.gif') no-repeat center;
+}
