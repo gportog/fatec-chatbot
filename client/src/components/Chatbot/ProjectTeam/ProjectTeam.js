@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './components.css';
+import '../Chatbot.css';
 
 class ProjectTeam extends Component {
   constructor(props) {
