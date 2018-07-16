@@ -60,7 +60,7 @@ header, section, footer {
 header {
   height: 70px;
   text-align: center;
-  background-color: #4682B4;
+  background-color: rgb(117, 117, 117);
   color: #ffffff;
   font-size: 30px;
   font-weight: 700; 
@@ -81,7 +81,7 @@ footer {
 .watson-msg {
   font-size: 11pt;
   color: #323232;
-  background-color: #4682B4; /*#fef9fb;*/
+  background-color: rgb(117, 117, 117); /*#fef9fb;*/
   border-radius: 20px;
   margin: 0 5px 10px;
   padding: 10px 15px;
@@ -107,7 +107,7 @@ footer {
 }
 
 .user-msg:after {
-   border-color: transparent #4682B4 transparent transparent;
+   border-color: transparent rgb(117, 117, 117) transparent transparent;
    border-style: solid;
    border-width: 0 15px 8px 0;
    bottom: -7px;
@@ -143,7 +143,7 @@ input {
   font-size: 1em;
   background-color: transparent;
   color: #323232;
-  border: solid #4682B4 2px;
+  border: solid rgb(52, 53, 56) 1px;
   border-radius: 20px;
   padding: 8px 10px;
 }
@@ -162,11 +162,10 @@ input {
 
 #clear-button {
   width: 70px;
-  background-image:url('../../public/img/icons/broom.png');
+  background-image:url('./img/icons/broom.png');
 }
 
 @media (min-width: 600px) {
-
     #root {
       width: 70%;
       height: 100%;
@@ -176,4 +175,10 @@ input {
       left: -100px;
       position: relative;
     }
+}
+
+@media (max-width: 320px) {
+  header {
+    font-size: 25px;
+  }
 }
