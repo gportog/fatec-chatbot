@@ -40,9 +40,10 @@
     "cookie-parser": "^1.4.3",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
+    "nodemailer": "^4.6.7",
     "rx": "^4.1.0",
     "rx-http-request": "^1.2.0",
-    "watson-developer-cloud": "^2.15.2"
+    "watson-developer-cloud": "^3.7.1"
   },
   "devDependencies": {}
 }
