@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import Feedback from '../components/Feedback/Feedback';
 import Chatbot from '../components/Chatbot/Chatbot';
 import user from './img/anonymous_user.png';
 import './ChatbotDash.css';
@@ -8,7 +9,8 @@ class ChatbotDash extends Component {
     constructor() {
         super();
         this.state = {
-            showUsrMng: false
+            showUsrMng: false,
+            showPopup: false
         }
     }
 
@@ -32,6 +34,12 @@ class ChatbotDash extends Component {
                 scrollTop: $($.attr(this, 'href')).offset().top
             }, 1000);
             return false;
+        });
+    }
+
+    togglePopup() {
+        this.setState({
+            showPopup: !this.state.showPopup
         });
     }
 
@@ -60,6 +68,18 @@ class ChatbotDash extends Component {
                                 <li className="menu__item">
                                     <a className="menu__link" id="link2" href="#team">Time</a>
                                 </li>
+                                <li className="menu__item">
+                                    <a className="menu__link" id="link3" href="#team">Help</a>
+                                </li>
+                                <li className="menu__item">
+                                    <div className="menu__link" id="link4" onClick={this.togglePopup.bind(this)}>Feedback</div>
+                                </li>
+                                <li className="menu__item">
+                                    <a className="menu__link" id="link5" href="http://www.fatecjd.edu.br/portal/" target="blank">Site</a>
+                                </li>
+                                <li className="menu__item">
+                                    <a className="menu__link" id="link6" href="https://siga.cps.sp.gov.br/aluno/login.aspx" target="blank">SIGA</a>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -67,6 +87,13 @@ class ChatbotDash extends Component {
                         onClick={this.UserManagement.bind(this)} />
                     {this.state.showUsrMng ? usrMng : null}
                 </div>
+
+                {this.state.showPopup ?
+                    <div className="container">
+                        <Feedback closePopup={this.togglePopup.bind(this)} />
+                    </div>
+                    : null
+                }
 
                 <div className="container" id="chatbot">
                     <div id="root"><Chatbot /></div>
