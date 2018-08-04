@@ -11,6 +11,31 @@ function DBClient(db) {
     this._client = Cloudant({ account: user, password: pw });
 }
 
+DBClient.prototype.search = function (obj, options) {
+    if (!obj || typeof obj !== 'object')
+        throw new Error("Search function parameter must be a valid object " +
+            `${typeof obj} received.`);
+    if (typeof obj.selector !== 'object')
+        throw new Error("selector_param must be a valid object, " +
+            `${typeof obj.selector} received.`);
+    if (!obj.fields || obj.fields && !Array.isArray(obj.fields))
+        obj.fields = [];
+    validateDB(this, options)
+    const db = this._db || options.db;
+    return new Promise((res, rej) => {
+        let database = this._client.db.use(db);
+        database.find({
+            selector:
+                obj.selector,
+            fields:
+                obj.fields
+        }, (err, result) => {
+            if (err) return rej(err);
+            return res(result.docs);
+        })
+    })
+}
+
 DBClient.prototype.insert = function (doc, options) {
     if (!doc || typeof doc !== 'object')
         throw new Error(`'doc' parameter must be a valid object ` +
