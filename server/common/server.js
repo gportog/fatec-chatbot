@@ -6,6 +6,7 @@ import * as http from 'http';
 import * as os from 'os';
 import cookieParser from 'cookie-parser';
 import Logger, {configure} from 'bunyan-node-logger';
+import morgan from 'morgan';
 dotenv.config();
 configure({
   appId: process.env.APP_ID,
@@ -20,6 +21,7 @@ export default class ExpressServer {
     this._l = new Logger(this.constructor.name);
     const root = path.normalize(__dirname + '/../..');
     app.set('appPath', root + 'client');
+    app.use(morgan('dev'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(cookieParser(process.env.SESSION_SECRET));
