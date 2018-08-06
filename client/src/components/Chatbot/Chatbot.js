@@ -60,6 +60,14 @@ class App extends Component {
             </div>
           </div>
         );
+      case 'system_failure':
+        return (
+          <div key={key} className="exchange">
+            <div className="watson-msg">
+              <p>Estou com problemas no servidor onde estou... Por favor tente entrar em contato comigo mais tarde.</p>
+            </div>
+          </div>
+        )
       default:
         this.renderText(exchange, key);
     }
@@ -111,7 +119,11 @@ class App extends Component {
         this.sendMessage(evaluation)
       })
       .catch((err) => {
-        console.error(err)
+        console.error(err);
+        document.getElementById("inputView").disabled = false;
+        this.setState({
+          isLoading: false
+        });
       });
   }
 
@@ -120,18 +132,17 @@ class App extends Component {
       isLoading: true
     });
     document.getElementById("inputView").disabled = true;
-    Conversation.message({
-      text
-    }).then(r => {
-      this.state.conversationHistory.push(r);
-      if (!r.output.cardType || r.output.cardType !== 'enriched') {
-        document.getElementById("inputView").disabled = false;
-      }
-      this.setState({
-        conversationHistory: this.state.conversationHistory,
-        isLoading: false
-      })
-    });
+    Conversation.message(text)
+      .then(r => {
+        this.state.conversationHistory.push(r);
+        if (!r.output.cardType || r.output.cardType !== 'enriched') {
+          document.getElementById("inputView").disabled = false;
+        }
+        this.setState({
+          conversationHistory: this.state.conversationHistory,
+          isLoading: false
+        })
+      });
   }
 
   componentDidUpdate() {
