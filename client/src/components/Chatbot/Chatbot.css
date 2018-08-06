@@ -136,6 +136,22 @@ footer {
    width: 0;
  }
 
+.watson-msg button {
+  border-radius: 20px;
+  color: white;
+  background-color: rgb(52, 53, 56);
+  height: 50px;  
+  width: 100px;
+}
+
+.glyphicon {
+  font-size: 30px;
+}
+
+.notHelped {
+  margin-left: 30px;
+}
+
 input {
   box-sizing:border-box;
   flex: 1;
@@ -178,6 +194,13 @@ input {
 }
 
 @media (max-width: 320px) {
+  .watson-msg button {
+    height: 40px;  
+    width: 90px;
+  }
+  .notHelped {
+    margin-left: 10px;
+  }
   header {
     font-size: 25px;
   }
