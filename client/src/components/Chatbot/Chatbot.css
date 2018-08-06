@@ -144,7 +144,16 @@ footer {
   width: 100px;
 }
 
-.glyphicon {
+#isLoading {
+  margin-left: 1%;
+  color: rgb(52, 53, 56);
+}
+
+.glyphicon-thumbs-up {
+  font-size: 30px;
+}
+
+.glyphicon-thumbs-down {
   font-size: 30px;
 }
 
