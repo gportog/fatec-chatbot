@@ -14,3 +14,38 @@ img.component-image {
     height: 60px;
     background: url('./img/loaders/loading.gif') no-repeat center;
 }
+
+iframe {
+    width: 600px;
+    height: 450px;
+}
+
+@media only screen and (max-width: 414px) {
+    iframe {
+        width: 305px;
+    }
+}
+
+@media only screen and (max-width: 411px) {
+    iframe {
+        width: 300px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    iframe {
+        width: 255px;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    iframe {
+        width: 250px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    iframe {
+        width: 200px;
+    }
+}

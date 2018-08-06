@@ -20,7 +20,6 @@ module.exports = (req, res, next) => {
     let feedbackEntry = {
         user: req.session ? req.session.user.name : 'username',
         contact: req.session ? req.session.user.contact : 'contato',
-        topic: req.body.topic || '',
         history: req.body.history || [],
         date: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
         comment: req.body.comment,

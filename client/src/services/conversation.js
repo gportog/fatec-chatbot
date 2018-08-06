@@ -11,10 +11,7 @@ class ConversationService {
   }) {
     this._responseContext = {...this._responseContext, ...context};
     const payload = {
-      input: {
-        text
-      },
-      context: this._responseContext
+      input: text
     };
     console.log('request',payload);
     return apiGatewayRequest(`${config.apiRoot}/watson/conversation/message`, {
