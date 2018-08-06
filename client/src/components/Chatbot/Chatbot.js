@@ -9,7 +9,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      conversationHistory: []
+      conversationHistory: [],
+      isLoading: false
     };
   }
 
@@ -54,8 +55,8 @@ class App extends Component {
             <div className="watson-msg"><EnrichedMsg answer={exchange.output} /></div>
             <div className="watson-msg">
               <p>A resposta te ajudou?</p>
-              <button className="helped glyphicon glyphicon-thumbs-up" id={'thumbs-up-'+key} title="Ajudou" alt="Ajudou" onClick={() => this.sendFeedback('positivo', key)}></button>
-              <button className="notHelped glyphicon glyphicon-thumbs-down" id={'thumbs-down-'+key} alt="Não ajudou" title="Não ajudou" onClick={() => this.sendFeedback('negativo', key)}></button>
+              <button className="helped glyphicon glyphicon-thumbs-up" id={'thumbs-up-' + key} title="Ajudou" alt="Ajudou" onClick={() => this.sendFeedback('positivo', key)}></button>
+              <button className="notHelped glyphicon glyphicon-thumbs-down" id={'thumbs-down-' + key} alt="Não ajudou" title="Não ajudou" onClick={() => this.sendFeedback('negativo', key)}></button>
             </div>
           </div>
         );
@@ -73,13 +74,17 @@ class App extends Component {
   }
 
   renderInputView() {
-    return <input type="text" id="inputView" autoComplete="off" placeholder='Escreva aqui...'
-      onKeyUp={e => this.onInputKeyUp(e)} />;
+    return <div>
+      {this.state.isLoading ? <span id="isLoading">FATEC-JD Chatbot está digitando...</span> : null}
+      <input type="text" id="inputView" autoComplete="off" placeholder='Escreva aqui...'
+        onKeyUp={e => this.onInputKeyUp(e)} />
+    </div>
   }
 
   onInputKeyUp(e) {
     switch (e.which) {
       case 0x0d:
+        if (e.target.value.length === 0) return;
         this.sendMessage(e.target.value);
         e.target.value = '';
         break;
@@ -89,8 +94,11 @@ class App extends Component {
   }
 
   sendFeedback(evaluation, key) {
-    document.getElementById("thumbs-up-"+key).disabled = true;
-    document.getElementById("thumbs-down-"+key).disabled = true;
+    document.getElementById("thumbs-up-" + key).disabled = true;
+    document.getElementById("thumbs-down-" + key).disabled = true;
+    this.setState({
+      isLoading: true
+    });
     let data = {
       'evaluation': evaluation,
       'comment': 'Feedback pelo chat',
@@ -108,16 +116,20 @@ class App extends Component {
   }
 
   sendMessage(text) {
+    this.setState({
+      isLoading: true
+    });
     document.getElementById("inputView").disabled = true;
     Conversation.message({
       text
     }).then(r => {
       this.state.conversationHistory.push(r);
-      if (!r.output.cardType || r.output.cardType !== 'enriched' ){
+      if (!r.output.cardType || r.output.cardType !== 'enriched') {
         document.getElementById("inputView").disabled = false;
       }
       this.setState({
-        conversationHistory: this.state.conversationHistory
+        conversationHistory: this.state.conversationHistory,
+        isLoading: false
       })
     });
   }
