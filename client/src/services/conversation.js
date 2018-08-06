@@ -2,38 +2,31 @@ import config from '../config';
 import { apiGatewayRequest, COMMON_API_GATEWAY_HEADERS } from './helpers/fetch';
 
 class ConversationService {
-  // private vars
-  _responseContext = {}
-
-  message({
-    text,
-    context = {}
-  }) {
-    this._responseContext = {...this._responseContext, ...context};
-    const payload = {
-      input: text
-    };
-    console.log('request',payload);
-    return apiGatewayRequest(`${config.apiRoot}/watson/conversation/message`, {
-      method: 'post',
-      headers: COMMON_API_GATEWAY_HEADERS,
-      body: JSON.stringify(payload)
+  message(text) {
+    return new Promise((res, rej) => {
+      const data = {
+        input: text
+      };
+      fetch(`${config.apiRoot}/watson/conversation/message`, {
+        method: 'POST',
+        headers: COMMON_API_GATEWAY_HEADERS,
+        body: JSON.stringify(data)
+      })
+        .then((response) => {
+          if (response.ok) return res(response.json());
+          if (response.status === 403) throw new Error('Access forbidden');
+          response = {
+            output: {
+              cardType: 'system_failure'
+            }
+          }
+          return res(response);
+        })
+        .catch((error) => {
+          console.error(error.message);
+          rej(error);
+        });
     })
-      .then(r => {
-        const res = JSON.parse(JSON.stringify(r));
-        const result = this._updateContext(res);
-        this._responseContext = result.context;
-        return result;
-      });
-  }
-
-  _updateContext(res) {
-    console.log('response', res);
-    const accounts = res.entities.filter(e => e.entity['account']);
-    if (accounts.length > 0) {
-      res.context.accounts = accounts
-    }
-    return res;
   }
 }
 
